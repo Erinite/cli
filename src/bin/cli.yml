@@ -16,25 +16,20 @@ subcommands:
   - add:
       about: Add to the current porject
       subcommands:
-          - module:
+          - modules:
               about: Add new module to current project
               args:
                 - database:
                     about: Add a database (backend only)
                     long: database
-                    short: d
                     takes_value: true
-                    required: true
+                    multiple: true
                     possible_values:
                         - sql
                         - redis
                 - webserver:
                     about: Adds webserver (backend only)
                     long: webserver
-                    short: w
-                    required: true
-                    conflicts_with:
-                      - database
           - feature:
               about: Add a new feature to the current project (frontend only)
               args:
