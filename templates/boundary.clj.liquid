@@ -1,0 +1,28 @@
+(ns {{ project.name }}.boundaries.{{ boundary.name }}
+    (:require [duct.database.sql]{% if boundary.sql %}
+              [erinite.db :refer [with-tx]]
+              [{{ project.name }}.boundaries.db.{{ boundary.name }} :as db]{% endif %}{% if boundary.redis %}
+              [duct.database.redis.carmine]{% endif %}{% endif %}{% if boundary.queue %}
+              [erinite.queue]{% endif %}))
+
+
+(defprotocol {{ boundary.name | capitalize }}
+    )
+
+{% if boundary.sql %}
+(extend-protocol {{ boundary.name | capitalize }}
+    duct.database.sql.Boundary
+    )
+{% endif %}
+
+{% if boundary.redis %}
+(extend-protocol {{ boundary.name | capitalize }}
+    duct.database.redis.carmine.Boundary
+    )
+{% endif %}
+
+{% if boundary.queue %}
+(extend-protocol {{ boundary.name | capitalize }}
+    erinite.queue.Boundary
+    )
+{% endif %}

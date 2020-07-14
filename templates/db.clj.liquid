@@ -1,0 +1,6 @@
+(ns {{ project.name }}.boundaries.db.{{ boundary.name }}
+    (:require [erinite.db :as db]))
+
+(db/load-queries
+    {{ project.name }}.boundaries.db/{{ boundary.name }}
+    "{{ project.name }}/boundaries/db/{{ boundary.name }}.sql")

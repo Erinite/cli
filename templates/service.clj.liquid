@@ -1,0 +1,11 @@
+(ns {{ project.name }}.services.{{ service.name }}.core
+    (:require [erinite.logging :refer [log]]
+              [{{ project.name }}.services.{{ service.name }}.spec :as spec]{% if service.add_boundary %}
+              [{{ project.name }}.services.{{ service.name }} :as {{ service.name }}{% endif %}]))
+
+
+
+
+(defmethod ig/init-key :{{ project.name }}.services.{{ service.name }}/core
+    [_ {:keys [logger]}]
+    )

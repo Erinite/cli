@@ -1,0 +1,79 @@
+name: erinite-cli
+about: Manage erinite projects
+
+args:
+  - verbose:
+      short: v
+      multiple: true
+      about: Sets the level of verbosity
+subcommands:
+  - new:
+      about: Create a new project
+      args:
+          - PROJECT:
+              about: Name of new project
+              required: true
+  - add:
+      about: Add to the current porject
+      subcommands:
+          - module:
+              about: Add new module to current project
+              args:
+                - database:
+                    about: Add a database (backend only)
+                    long: database
+                    short: d
+                    takes_value: true
+                    required: true
+                    possible_values:
+                        - sql
+                        - redis
+                - webserver:
+                    about: Adds webserver (backend only)
+                    long: webserver
+                    short: w
+                    required: true
+                    conflicts_with:
+                      - database
+          - feature:
+              about: Add a new feature to the current project (frontend only)
+              args:
+                - FEATURE:
+                    about: Name of the feature to add
+                    required: true
+          - boundary:
+              about: Add a new boundary to the current project (backend only)
+              args:
+                - BOUNDARY:
+                    about: Name of the bounary to add
+                    required: true
+                - sql:
+                    about: Add protocol implementation for SQL
+                    long: sql
+                - redis:
+                    about: Add protocol implementation for Redis
+                    long: redis
+                - queue:
+                    about: Add protocol implementation for a generic queue
+                    long: queue
+          - service:
+              about: Add a new service to current project (backend only)
+              args:
+                - SERVICE:
+                    about: Name of the new service to add
+                    required: true
+                - add_boundary:
+                    about: Require boundary of the same name as this feature
+                    long: add-boundary
+                    short: b
+                - db:
+                    long: db
+                    about: Adds database as dependency
+                - router:
+                    long: router
+                    about: Adds router as dependency
+                - queues:
+                    long: queue
+                    about: Adds one or more queues as dependency
+                    takes_value: true
+                    multiple: true
