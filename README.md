@@ -18,7 +18,7 @@ CLI for working with Erinite
 * `erin add service <service-name> <options>`
   Add a new service to the project. Backend projects only.
   
-  If `<options>` includes `--add-boundary` or `-b`, then a boundary of the same name as the service is imported.
+  If `<options>` includes `--with-boundary` or `-b`, then a boundary of the same name as the service is imported.
   
   Other available `<options>` are: `--router`, `--db` and `--queue <queue-name(s)>`
 * `erin add feature <feature-name>`

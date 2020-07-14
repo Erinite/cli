@@ -59,7 +59,7 @@ subcommands:
                     required: true
                 - add_boundary:
                     about: Require boundary of the same name as this feature
-                    long: add-boundary
+                    long: with-boundary
                     short: b
                 - db:
                     long: db
