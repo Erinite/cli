@@ -1,7 +1,7 @@
 name: erinite-cli
 about: Manage erinite projects
 
-settings:
+global_settings:
     - subcommandrequiredelsehelp
 args:
   - verbose:
@@ -17,8 +17,6 @@ subcommands:
               required: true
   - add:
       about: Add to the current porject
-      settings:
-        - subcommandrequiredelsehelp
       subcommands:
         - modules:
               about: Add new module to current project
@@ -28,12 +26,16 @@ subcommands:
                     long: database
                     takes_value: true
                     multiple: true
+                    required_unless_one:
+                        - webserver
                     possible_values:
                         - sql
                         - redis
                 - webserver:
                     about: Adds webserver (backend only)
                     long: webserver
+                    required_unless_one:
+                        - database
         - feature:
               about: Add a new feature to the current project (frontend only)
               args:

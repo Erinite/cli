@@ -2,10 +2,8 @@
 use colored::*;
 use rust_embed::RustEmbed;
 use clap::{App, load_yaml, crate_authors, crate_version};
-use std::fs::{self, File, DirBuilder};
+use std::fs::{File, DirBuilder};
 use std::io::prelude::*;
-use std::process;
-use std::error::Error;
 use serde::{Serialize, Deserialize};
 
 
@@ -24,15 +22,6 @@ struct Erinite {
 struct Project {
     name: String,
     features: Vec<String>,
-}
-
-fn terminate_error (message: &str, error: &dyn Error) -> ! {
-    eprintln!("{}: {:?}", message.red().bold(), error.to_string());
-    process::exit(1);
-}
-fn terminate (message: &str) -> ! {
-    eprintln!("{}.", message.red().bold());
-    process::exit(1);
 }
 
 fn template (filename: &str) -> liquid::Template {
@@ -58,19 +47,23 @@ fn create_project (project_name: &str) {
             "name": project_name,
         }
     });
+    let erinite = Erinite { project: Project { name: project_name.to_string(), features: Vec::new()}};
+    let toml = toml::to_string(&erinite).unwrap();
+    println!("{}", toml);
     println!("{}", template("test.clj").render(&globals).unwrap());
-    let path = "";
     DirBuilder::new()
         .recursive(true)
-        .create(path).unwrap();
-    output("Project created", project_name);
+        .create(project_name).unwrap();
+    let mut file = File::create(format!("{}/erinite.toml", project_name)).unwrap();
+    file.write_all(toml.as_bytes()).unwrap();
+    output("Project created", format!("{}/", project_name).as_str());
 }
 
 fn read_project_file () -> Erinite {
-    let mut file = File::open("erinite.toml").unwrap_or_else(|error|{terminate_error("Could not open erinite.toml", &error)});
+    let mut file = File::open("erinite.toml").expect("Could not open erinite.toml");
     let mut erinite = String::new();
-    file.read_to_string(&mut erinite).unwrap_or_else(|error|{terminate_error("Could not read erinite.toml", &error)});
-    toml::from_str(erinite.as_str()).unwrap_or_else(|error|{terminate_error("Could not read erinite.toml", &error)})
+    file.read_to_string(&mut erinite).expect("Could not read erinite.toml");
+    toml::from_str(erinite.as_str()).expect("Could not read erinite.toml")
 }
 
 fn add_feature (feature_name: &str) {
