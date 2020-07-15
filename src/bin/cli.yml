@@ -1,6 +1,8 @@
 name: erinite-cli
 about: Manage erinite projects
 
+settings:
+    - subcommandrequiredelsehelp
 args:
   - verbose:
       short: v
@@ -15,8 +17,10 @@ subcommands:
               required: true
   - add:
       about: Add to the current porject
+      settings:
+        - subcommandrequiredelsehelp
       subcommands:
-          - modules:
+        - modules:
               about: Add new module to current project
               args:
                 - database:
@@ -30,13 +34,13 @@ subcommands:
                 - webserver:
                     about: Adds webserver (backend only)
                     long: webserver
-          - feature:
+        - feature:
               about: Add a new feature to the current project (frontend only)
               args:
                 - FEATURE:
                     about: Name of the feature to add
                     required: true
-          - boundary:
+        - boundary:
               about: Add a new boundary to the current project (backend only)
               args:
                 - BOUNDARY:
@@ -51,7 +55,7 @@ subcommands:
                 - queue:
                     about: Add protocol implementation for a generic queue
                     long: queue
-          - service:
+        - service:
               about: Add a new service to current project (backend only)
               args:
                 - SERVICE:

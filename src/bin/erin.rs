@@ -95,15 +95,11 @@ fn main() {
         ("add", Some(add_command)) => {
             match add_command.subcommand() {
                 ("feature", Some(feature)) => add_feature(feature.value_of("FEATURE").unwrap()),
-                ("", None) => {
-                    println!("{} See: erin help add", format!("Missing command!").red().bold());
-                }
-                _ => unreachable!()
+                ("", None) => unreachable!(),
+                _ => unreachable!(),
             }
         }
-        ("", None) => {
-            println!("{} See: erin help", format!("Missing Command!").red().bold());
-        }
-        _ => unreachable!()
+        ("", None) => unreachable!(),
+        _ => unreachable!(),
     }
 }
